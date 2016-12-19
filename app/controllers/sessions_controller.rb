@@ -1,8 +1,13 @@
 class SessionsController < ApplicationController
+
+  def router
+      
+  end
+
   def new
 
   end
-  
+
   def create
     user = User.find_by(email_address: params[:session][:email_address])
     if user && user.authenticate(params[:session][:password])
