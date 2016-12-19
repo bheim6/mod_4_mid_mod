@@ -8,4 +8,7 @@ Rails.application.routes.draw do
       resources :links, only: [:create]
     end
   end
+
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
 end
