@@ -1,4 +1,26 @@
 <h1>Welcome to Links Index</h1>
-<% if current_user %>
-  <%= link_to "Sign Out", logout_path, method: "delete" %>
-<% end %>
+<p>
+  <% if current_user %>
+    <%= link_to "Sign Out", logout_path, method: "delete" %><br />
+  <% end %>
+</p>
+<p>
+  <%= form_for @link do |f| %>
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+
+    <%= f.submit "Submit" %>
+  <% end %>
+</p>
+<p>
+  <% @links.each do |link| %>
+  <ul>
+    <li>
+      <%= link.title %> - <%= link_to(link.url, link.url) %>
+    </li>
+  </ul>
+  <% end %>
+</p>
