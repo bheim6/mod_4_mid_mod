@@ -13,16 +13,19 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rails_12factor'
 gem 'responders'
 gem 'awesome_print'
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # gem 'unicorn'
 
 # gem 'capistrano-rails', group: :development
 
+gem 'web-console', group: :development
+
 group :development, :test do
-  gem 'byebug'
   gem 'rspec-rails'
-  gem 'web-console', '~> 2.0'
+  gem 'shoulda-matchers'
+  gem 'byebug'
+  # gem 'web-console', '~> 2.0'
   gem 'capybara'
   gem 'launchy'
   gem 'pry'
@@ -31,5 +34,4 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'better_errors'
   gem 'factory_girl_rails'
-  gem 'shoulda-matchers'
 end
