@@ -28,12 +28,18 @@ RSpec.feature "Users can sign up and login" do
     click_on "Log In"
     expect(current_path).to eq('/login')
     fill_in "Email address", with: "example@example.com"
-    fill_in "Password", with: "password"
-    fill_in "Password confirmation", with: "password"
+    fill_in "Password", with: user1.password
+    fill_in "Password confirmation", with: user1.password
     click_on "Submit"
 
     expect(current_path).to eq('/')
     # As an authenticated user viewing the index page, I should see a link to "Sign Out" and not see a link to "Sign In".
-    # This should redirect me back to the root of the application where I should see a link to "Sign In".
+    expect(page).to have_link("Sign Out")
+    expect(page).to_not have_link("Sign In")
+
+    click_link "Sign Out"
+    # This should redirect me back to the root of the application where I should see a link to "Log In".
+    expect(current_path).to eq('/login_router')
+    expect(page).to have_link('Log In')
   end
 end

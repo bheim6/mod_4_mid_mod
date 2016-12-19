@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def router
-      
+
   end
 
   def new
@@ -16,5 +16,10 @@ class SessionsController < ApplicationController
     else
       flash.now[:danger] = "Email and/or Password is invalid, please try again."
     end
+  end
+
+  def destroy
+    session.clear
+    redirect_to root_path
   end
 end
