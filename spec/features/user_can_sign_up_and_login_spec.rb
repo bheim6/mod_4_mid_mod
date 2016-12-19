@@ -21,4 +21,19 @@ RSpec.feature "Users can sign up and login" do
   # I cannot sign up with an email address that has already been used.
   # Password and confirmation must match.
   # If criteria is not met the user should be given a message to reflect the reason they could not sign up.
+
+  scenario "Users can log in and sign out from the root page" do
+    user1 = create(:user)
+    visit '/'
+    click_on "Log In"
+    expect(current_path).to eq('/login')
+    fill_in "Email address", with: "example@example.com"
+    fill_in "Password", with: "password"
+    fill_in "Password confirmation", with: "password"
+    click_on "Submit"
+
+    expect(current_path).to eq('/')
+    # As an authenticated user viewing the index page, I should see a link to "Sign Out" and not see a link to "Sign In".
+    # This should redirect me back to the root of the application where I should see a link to "Sign In".
+  end
 end
