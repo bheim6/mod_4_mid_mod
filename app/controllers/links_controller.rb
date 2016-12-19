@@ -1,10 +1,11 @@
 class LinksController < ApplicationController
+  before_action :check_user
   def index
-    unless current_user
-      redirect_to login_router_path
-    end
-
     @link = Link.new
+    if current_user.links == nil
+    else
+      @links = current_user.links
+    end
   end
 
   def new
@@ -12,10 +13,9 @@ class LinksController < ApplicationController
   end
 
   def create
-    @link = Link.new( link_params )
+    @link = current_user.links.new( link_params )
 
     if @link.save
-      @link.user_id = current_user.id
       flash[:notice] = "Link Created!"
       redirect_to links_path
     else
@@ -23,10 +23,15 @@ class LinksController < ApplicationController
     end
   end
 
+  def check_user
+    unless current_user
+      redirect_to login_router_path
+    end
+  end
+
   private
   def link_params
-    params.require(:link).permit(:url,
-                                 :title)
+    params.require(:link).permit(:url, :title)
   end
 
 end
