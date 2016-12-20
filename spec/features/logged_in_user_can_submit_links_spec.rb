@@ -43,5 +43,18 @@ RSpec.feature "Logged in users can submit links" do
     fill_in "Title", with: "The Google"
     click_on "Submit"
 
+    expect(page).to have_content("The Google")
+    expect(page).to have_content("www.google.com")
+    # As an authenticated user who has added links to my URLockbox, when I view the links index:
+    click_on "Edit"
+    # Each link has an "Edit" button that either takes me to a page to edit the link or allows me to edit the link in place on the page.
+    # I can edit the title and/or the url of the link.
+    fill_in "Url", with: "https://www.google.com/"
+    fill_in "Title", with: "The Googlez"
+    click_on "Submit"
+
+    expect(page).to have_content("The Googlez")
+    expect(page).to have_content("https://www.google.com/")
+    # I cannot change the url to an invalid url. Show the same error message as above.
   end
 end
