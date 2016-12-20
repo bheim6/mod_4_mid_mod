@@ -23,6 +23,20 @@ class LinksController < ApplicationController
     end
   end
 
+  def edit
+    @link = Link.find(params[:id])
+  end
+
+  def update
+    @link = Link.find(params[:id])
+
+    if @link.update_attributes( link_params )
+      redirect_to root_path
+    else
+      render :edit
+    end
+  end
+
   def check_user
     unless current_user
       redirect_to login_router_path
