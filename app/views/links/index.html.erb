@@ -1,13 +1,14 @@
 <h1>Welcome to Links Index</h1>
 <p>
   <% if current_user %>
+    <%= "#{current_user.email_address}" %> -
     <%= link_to "Sign Out", logout_path, method: "delete" %><br />
   <% end %>
 </p>
 <p>
   Title:
   <input type="text" name="link[title]" id="link_title" />
-  Url:
+  URL:
   <input type="text" name="link[url]" id="link_url" />
   <button type="button" name="create-link-button" id="submit_link">Create</button>
   <%= form_for @link do |f| %>
