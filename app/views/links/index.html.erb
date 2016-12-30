@@ -5,6 +5,11 @@
   <% end %>
 </p>
 <p>
+  Title:
+  <input type="text" name="link[title]" id="link_title" />
+  Url:
+  <input type="text" name="link[url]" id="link_url" />
+  <button type="button" name="create-link-button" id="submit_link">Create</button>
   <%= form_for @link do |f| %>
     <%= f.label :url %>
     <%= f.text_field :url %>
@@ -24,3 +29,5 @@
   </ul>
   <% end %>
 </p>
+<div id="links_list">
+</div>
