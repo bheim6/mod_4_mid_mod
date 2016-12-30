@@ -38,15 +38,13 @@ function linkHTML(link) {
     return `<div class='link' data-id='${link.id}' id="link-${link.id}">
               <p class='link-title' contenteditable=true>Title: ${ link.title }</p>
               <p class='link-url' contenteditable=true>Url: ${ link.url }</p>
-
-              <p class="link_read">
-                Read? ${ link.read }
-              </p>
-              <p class="link_buttons">
+              <p>Read?</p>
+              <div class="link_buttons">
                 <button class="read-true">+</button>
                 <button class="read-false">-</button>
+                <span class="link_read">${ link.read }</span>
                 <button class='delete-link'>Delete</button>
-              </p>
+              </div>
             </div>`
 }
 
@@ -66,28 +64,25 @@ function attachReadEvents() {
 }
 
 function readTrue() {
-  console.log("chyea");
   var id = $(this).closest(".link").data('id');
 
-  var quality = $(this).siblings("span").text();
-  if (quality === "swill") {quality = "plausible"}
-  else if (quality === "plausible") {quality = "genius"}
+  var read = $(this).siblings("span").text();
+  if (read === "false") {read = "true"}
 
-  $(this).siblings("span").text(quality);
+  $(this).siblings("span").text(read);
 
-  updateRead(quality, id);
+  updateRead(read, id);
 }
 
 function readFalse() {
   var id = $(this).closest(".link").data('id');
 
-  var quality = $(this).siblings("span").text();
-  if (quality === "genius") {quality = "plausible"}
-  else if (quality === "plausible") {quality = "swill"}
+  var read = $(this).siblings("span").text();
+  if (read === "true") {read = "false"}
 
-  $(this).siblings("span").text(quality);
+  $(this).siblings("span").text(read);
 
-  updateRead(quality, id);
+  updateRead(read, id);
 }
 
 function updateRead(read, id) {
