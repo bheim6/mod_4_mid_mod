@@ -9,9 +9,15 @@ class Api::V1::LinksController < ApplicationController
     end
   end
 
+  def update
+    @link = Link.find(params[:id])
+    render json: @link if @link.update(link_params)
+  end
+
+
   private
 
   def link_params
-    params.permit(:title, :url)
+    params.permit(:title, :url, :read)
   end
 end

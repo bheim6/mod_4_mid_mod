@@ -17,6 +17,7 @@ function createLink (event){
 
   $.post("/api/v1/links", link)
    .then( renderLink )
+   .then( attachReadEvents )
    .fail( displayFailure )
  }
 
@@ -28,7 +29,7 @@ function getLinkData() {
 }
 
 function renderLink(link){
-  $("#links_list").append( linkHTML(link) )
+  $("#links_list").prepend( linkHTML(link) )
   // clearLink();
 }
 
@@ -39,11 +40,11 @@ function linkHTML(link) {
               <p class='link-url' contenteditable=true>Url: ${ link.url }</p>
 
               <p class="link_read">
-                Read?: ${ link.read }
+                Read? ${ link.read }
               </p>
               <p class="link_buttons">
-                <button class="upgrade-quality">+</button>
-                <button class="downgrade-quality">-</button>
+                <button class="read-true">+</button>
+                <button class="read-false">-</button>
                 <button class='delete-link'>Delete</button>
               </p>
             </div>`
@@ -56,4 +57,43 @@ function clearLink() {
 
 function displayFailure(failureData){
   console.log("FAILED attempt to create new Link: " + failureData.responseText);
+}
+
+
+function attachReadEvents() {
+  $(".read-true").on("click", readTrue)
+  $(".read-false").on("click", readFalse)
+}
+
+function readTrue() {
+  console.log("chyea");
+  var id = $(this).closest(".link").data('id');
+
+  var quality = $(this).siblings("span").text();
+  if (quality === "swill") {quality = "plausible"}
+  else if (quality === "plausible") {quality = "genius"}
+
+  $(this).siblings("span").text(quality);
+
+  updateRead(quality, id);
+}
+
+function readFalse() {
+  var id = $(this).closest(".link").data('id');
+
+  var quality = $(this).siblings("span").text();
+  if (quality === "genius") {quality = "plausible"}
+  else if (quality === "plausible") {quality = "swill"}
+
+  $(this).siblings("span").text(quality);
+
+  updateRead(quality, id);
+}
+
+function updateRead(read, id) {
+  $.ajax({
+    url: `/api/v1/links/${id}`,
+    method: 'put',
+    data: {link: {read: read}}
+  })
 }
