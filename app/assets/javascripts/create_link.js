@@ -35,11 +35,11 @@ function renderLink(link){
 function linkHTML(link) {
 
     return `<div class='link' data-id='${link.id}' id="link-${link.id}">
-              <p class='link-title' contenteditable=true>${ link.title }</p>
-              <p class='link-url' contenteditable=true>${ link.url }</p>
+              <p class='link-title' contenteditable=true>Title: ${ link.title }</p>
+              <p class='link-url' contenteditable=true>Url: ${ link.url }</p>
 
               <p class="link_read">
-                ${ link.read }
+                Read?: ${ link.read }
               </p>
               <p class="link_buttons">
                 <button class="upgrade-quality">+</button>
