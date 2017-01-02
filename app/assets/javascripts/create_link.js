@@ -45,7 +45,8 @@ function linkHTML(link) {
 
     return `<div class='link' data-id='${link.id}' id="link-${link.id}">
               <p class='link-title' contenteditable=true>Title: ${ link.title }</p>
-              <p class='link-url' contenteditable=true>Url: ${ link.url }</p>
+              Url:
+              <a href="${link.url}" target="_blank">${link.url}</a>
               <div class="link_buttons">
               <p class="mark-as">${ markAs }</p>
                 <button class="read-button">*</button>
