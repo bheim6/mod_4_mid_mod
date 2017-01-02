@@ -48,10 +48,9 @@ function linkHTML(link) {
               <p class='link-url' contenteditable=true>Url: ${ link.url }</p>
               <div class="link_buttons">
               <p class="mark-as">${ markAs }</p>
-              Read? -
-              <span class="link_read">${ link.read }</span>
-                <button class="read-true">+</button>
-                <button class="read-false">-</button>
+                <button class="read-button">*</button>
+                Read? -
+                <span class="link_read">${ link.read }</span>
                 <button class='delete-link'>Delete</button>
               </div>
             </div>`
@@ -68,18 +67,20 @@ function displayFailure(failureData){
 
 
 function attachReadEvents() {
-  $(".read-true").on("click", readTrue)
-  $(".read-false").on("click", readFalse)
+  $(".read-button").on("click", readChange)
+  // $(".read-false").on("click", readFalse)
 }
 
-function readTrue() {
+function readChange() {
   var id = $(this).closest(".link").data('id');
 
   var read = $(this).siblings("span").text();
   if (read === "false") {read = "true"}
+  else if (read === "true") {read = "false"}
 
   var markAs = $(this).siblings("p").text();
   if (markAs === "Mark as Read") {markAs = "Mark as Unread"}
+  else if (markAs === "Mark as Unread") {markAs = "Mark as Read"}
 
   $(this).siblings("span").text(read);
   $(this).siblings("p").text(markAs);
@@ -87,16 +88,20 @@ function readTrue() {
   updateRead(read, id);
 }
 
-function readFalse() {
-  var id = $(this).closest(".link").data('id');
-
-  var read = $(this).siblings("span").text();
-  if (read === "true") {read = "false"}
-
-  $(this).siblings("span").text(read);
-
-  updateRead(read, id);
-}
+// function readFalse() {
+//   var id = $(this).closest(".link").data('id');
+//
+//   var read = $(this).siblings("span").text();
+//   if (read === "true") {read = "false"}
+//
+//   var markAs = $(this).siblings("p").text();
+//   if (markAs === "Mark as Unread") {markAs = "Mark as Read"}
+//
+//   $(this).siblings("span").text(read);
+//   $(this).siblings("p").text(markAs);
+//
+//   updateRead(read, id);
+// }
 
 function updateRead(read, id) {
   $.ajax({
