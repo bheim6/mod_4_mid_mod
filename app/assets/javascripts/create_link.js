@@ -17,6 +17,7 @@ function createLink (event){
 
   $.post("/api/v1/links", link)
    .then( renderLink )
+   .then( attachReadEvents )
    .fail( displayFailure )
  }
 
@@ -28,24 +29,30 @@ function getLinkData() {
 }
 
 function renderLink(link){
-  $("#links_list").append( linkHTML(link) )
-  // clearLink();
+  $("#links_list").prepend( linkHTML(link) )
+  clearLink();
 }
 
 function linkHTML(link) {
 
-    return `<div class='link' data-id='${link.id}' id="link-${link.id}">
-              <p class='link-title' contenteditable=true>${ link.title }</p>
-              <p class='link-url' contenteditable=true>${ link.url }</p>
+  var markAs;
+  var read = link.read;
+  if (read === "true") {
+    markAs = "Mark as Unread"
+  } else {
+    markAs = "Mark as Read"
+  };
 
-              <p class="link_read">
-                ${ link.read }
-              </p>
-              <p class="link_buttons">
-                <button class="upgrade-quality">+</button>
-                <button class="downgrade-quality">-</button>
+    return `<div class='link' data-id='${link.id}' id="link-${link.id}">
+              <p class='link-title' contenteditable=true>Title: ${ link.title }</p>
+              <p class='link-url' contenteditable=true>Url: ${ link.url }</p>
+              <div class="link_buttons">
+              <p class="mark-as">${ markAs }</p>
+                <button class="read-button">*</button>
+                Read? -
+                <span class="link_read">${ link.read }</span>
                 <button class='delete-link'>Delete</button>
-              </p>
+              </div>
             </div>`
 }
 
@@ -56,4 +63,34 @@ function clearLink() {
 
 function displayFailure(failureData){
   console.log("FAILED attempt to create new Link: " + failureData.responseText);
+}
+
+
+function attachReadEvents() {
+  $(".read-button").on("click", readChange)
+}
+
+function readChange() {
+  var id = $(this).closest(".link").data('id');
+
+  var read = $(this).siblings("span").text();
+  if (read === "false") {read = "true"}
+  else if (read === "true") {read = "false"}
+
+  var markAs = $(this).siblings("p").text();
+  if (markAs === "Mark as Read") {markAs = "Mark as Unread"}
+  else if (markAs === "Mark as Unread") {markAs = "Mark as Read"}
+
+  $(this).siblings("span").text(read);
+  $(this).siblings("p").text(markAs);
+
+  updateRead(read, id);
+}
+
+function updateRead(read, id) {
+  $.ajax({
+    url: `/api/v1/links/${id}`,
+    method: 'put',
+    data: {link: {read: read}}
+  })
 }
