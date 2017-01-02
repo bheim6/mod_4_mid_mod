@@ -30,7 +30,7 @@ function getLinkData() {
 
 function renderLink(link){
   $("#links_list").prepend( linkHTML(link) )
-  // clearLink();
+  clearLink();
 }
 
 function linkHTML(link) {
@@ -68,7 +68,6 @@ function displayFailure(failureData){
 
 function attachReadEvents() {
   $(".read-button").on("click", readChange)
-  // $(".read-false").on("click", readFalse)
 }
 
 function readChange() {
@@ -87,21 +86,6 @@ function readChange() {
 
   updateRead(read, id);
 }
-
-// function readFalse() {
-//   var id = $(this).closest(".link").data('id');
-//
-//   var read = $(this).siblings("span").text();
-//   if (read === "true") {read = "false"}
-//
-//   var markAs = $(this).siblings("p").text();
-//   if (markAs === "Mark as Unread") {markAs = "Mark as Read"}
-//
-//   $(this).siblings("span").text(read);
-//   $(this).siblings("p").text(markAs);
-//
-//   updateRead(read, id);
-// }
 
 function updateRead(read, id) {
   $.ajax({
