@@ -35,14 +35,23 @@ function renderLink(link){
 
 function linkHTML(link) {
 
+  var markAs;
+  var read = link.read;
+  if (read === "true") {
+    markAs = "Mark as Unread"
+  } else {
+    markAs = "Mark as Read"
+  };
+
     return `<div class='link' data-id='${link.id}' id="link-${link.id}">
               <p class='link-title' contenteditable=true>Title: ${ link.title }</p>
               <p class='link-url' contenteditable=true>Url: ${ link.url }</p>
-              <p>Read?</p>
               <div class="link_buttons">
+              <p class="mark-as">${ markAs }</p>
+              Read? -
+              <span class="link_read">${ link.read }</span>
                 <button class="read-true">+</button>
                 <button class="read-false">-</button>
-                <span class="link_read">${ link.read }</span>
                 <button class='delete-link'>Delete</button>
               </div>
             </div>`
@@ -69,7 +78,11 @@ function readTrue() {
   var read = $(this).siblings("span").text();
   if (read === "false") {read = "true"}
 
+  var markAs = $(this).siblings("p").text();
+  if (markAs === "Mark as Read") {markAs = "Mark as Unread"}
+
   $(this).siblings("span").text(read);
+  $(this).siblings("p").text(markAs);
 
   updateRead(read, id);
 }
