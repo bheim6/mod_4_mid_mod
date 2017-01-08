@@ -4,7 +4,7 @@ class Link < ActiveRecord::Base
   belongs_to :user
   validates :title, presence: true
   validates :url, presence: true
-  # validate :is_url_valid
+  validate :is_url_valid
 
   def is_url_valid
     if url
