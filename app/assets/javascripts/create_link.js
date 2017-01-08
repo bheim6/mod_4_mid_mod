@@ -45,8 +45,9 @@ function linkHTML(link) {
 
     return `<div class='link' data-id='${link.id}' id="link-${link.id}">
               <p class='link-title' contenteditable=true>Title: ${ link.title }</p>
-              <p class='link-url' contenteditable=true>Url: ${ link.url }</p>
+              Url:
               <div class="link_buttons">
+              <a href="${link.url}" target="_blank">${link.url}</a>
               <p class="mark-as">${ markAs }</p>
                 <button class="read-button">*</button>
                 Read? -
@@ -63,6 +64,7 @@ function clearLink() {
 
 function displayFailure(failureData){
   console.log("FAILED attempt to create new Link: " + failureData.responseText);
+  // $('#links_list').prepend("FAILED attempt to create new Link: " + failureData.responseText + "<br>");
 }
 
 
@@ -80,9 +82,15 @@ function readChange() {
   var markAs = $(this).siblings("p").text();
   if (markAs === "Mark as Read") {markAs = "Mark as Unread"}
   else if (markAs === "Mark as Unread") {markAs = "Mark as Read"}
+  // debugger
 
   $(this).siblings("span").text(read);
   $(this).siblings("p").text(markAs);
+  if (read === "true") {
+    $(this).siblings("a").css("text-decoration","line-through");
+  } else {
+    $(this).siblings("a").css("text-decoration","none");
+  }
 
   updateRead(read, id);
 }

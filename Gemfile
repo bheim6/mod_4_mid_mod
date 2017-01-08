@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
@@ -14,6 +13,7 @@ gem 'rails_12factor'
 gem 'responders'
 gem 'awesome_print'
 gem 'bcrypt', '~> 3.1.7'
+gem 'validate_url'
 
 # gem 'unicorn'
 
