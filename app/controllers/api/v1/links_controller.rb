@@ -15,7 +15,7 @@ class Api::V1::LinksController < ApplicationController
   end
 
   def index
-    @links = Link.where(user_id: current_user)
+    @links = Link.all
     render json: @links
   end
 

@@ -44,7 +44,8 @@ function linkHTML(link) {
   };
 
     return `<div class='link' data-id='${link.id}' id="link-${link.id}">
-              <p class='link-title' contenteditable=true>Title: ${ link.title }</p>
+              Title:
+              <p class='link-title' contenteditable=true>${ link.title }</p>
               Url:
               <div class="link_buttons">
               <a href="${link.url}" target="_blank">${link.url}</a>
@@ -68,12 +69,15 @@ function displayFailure(failureData){
 }
 
 
-function attachReadEvents() {
+function attachReadEvents(link) {
   $(".read-button").on("click", readChange)
 }
 
-function readChange() {
+function readChange(link) {
   var id = $(this).closest(".link").data('id');
+  var parent = $(this).closest(".link");
+  var title = $(parent).find('.link-title').text();
+  var url = $(this).siblings("a").text();
 
   var read = $(this).siblings("span").text();
   if (read === "false") {read = "true"}
@@ -92,13 +96,25 @@ function readChange() {
     $(this).siblings("a").css("text-decoration","none");
   }
 
-  updateRead(read, id);
+  updateRead(read, id, title, url);
 }
 
-function updateRead(read, id) {
+function updateRead(read, id, title, url) {
   $.ajax({
     url: `/api/v1/links/${id}`,
     method: 'put',
     data: {link: {read: read}}
   })
+
+  if (read === "true") {
+    console.log("reading true")
+    $.post({
+      url: 'http://localhost:3001/add_read',
+      data: {
+        title: title,
+        url: url
+      },
+      dataType: 'jsonp'
+    })
+  }
 }
