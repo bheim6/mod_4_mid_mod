@@ -14,6 +14,11 @@ class Api::V1::LinksController < ApplicationController
     render json: @link if @link.update(link_params)
   end
 
+  def index
+    @links = Link.where(user_id: current_user)
+    render json: @links
+  end
+
 
   private
 
