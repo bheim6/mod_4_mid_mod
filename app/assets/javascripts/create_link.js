@@ -64,6 +64,7 @@ function clearLink() {
 
 function displayFailure(failureData){
   console.log("FAILED attempt to create new Link: " + failureData.responseText);
+  // $('#links_list').prepend("FAILED attempt to create new Link: " + failureData.responseText + "<br>");
 }
 
 
