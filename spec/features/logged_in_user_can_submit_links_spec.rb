@@ -15,11 +15,11 @@ RSpec.feature "Logged in users can submit links" do
     expect(current_path).to eq('/')
 
     # The Link model should include:
-    # A valid URL location for the link
-    fill_in "Url", with: "www.google.com"
+    # A valid Url location for the link
+    fill_in "link_url", with: "https://www.google.com/"
     # A title for the link
-    fill_in "Title", with: "The Google"
-    click_on "Submit"
+    fill_in "link_title", with: "The Google"
+    click_on "submit_link"
 
     expect(Link.count).to eq(1)
     expect(user1.links.count).to eq(1)
@@ -39,19 +39,19 @@ RSpec.feature "Logged in users can submit links" do
 
     expect(current_path).to eq('/')
 
-    fill_in "Url", with: "www.google.com"
-    fill_in "Title", with: "The Google"
-    click_on "Submit"
+    fill_in "link_url", with: "https://www.google.com/"
+    fill_in "link_title", with: "The Google"
+    click_on "submit_link"
 
     expect(page).to have_content("The Google")
-    expect(page).to have_content("www.google.com")
-    # As an authenticated user who has added links to my URLockbox, when I view the links index:
+    expect(page).to have_content("https://www.google.com/")
+    # As an authenticated user who has added links to my link_urlockbox, when I view the links index:
     click_on "Edit"
     # Each link has an "Edit" button that either takes me to a page to edit the link or allows me to edit the link in place on the page.
     # I can edit the title and/or the url of the link.
-    fill_in "Url", with: "https://www.google.com/"
-    fill_in "Title", with: "The Googlez"
-    click_on "Submit"
+    fill_in "link_url", with: "https://www.google.com/"
+    fill_in "link_title", with: "The Googlez"
+    click_on "submit_link"
 
     expect(page).to have_content("The Googlez")
     expect(page).to have_content("https://www.google.com/")
